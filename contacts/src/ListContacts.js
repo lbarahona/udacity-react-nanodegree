@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import escapeRegExp from 'escape-string-regexp'
+import escapeRegEx from 'escape-string-regexp'
 import sortBy from 'sort-by'
+
 
 class ListContacts extends Component {
   static propTypes = {
@@ -25,10 +26,9 @@ class ListContacts extends Component {
   render() {
     const { contacts, onDeleteContact } = this.props
     const { query } = this.state
-
     let showingContacts
-    if (query) {
-      const match = new RegExp(escapeRegExp(query), 'i')
+    if (this.state.query) {
+      const match = new RegExp(escapeRegEx(query), 'i')
       showingContacts = contacts.filter((contact) => match.test(contact.name))
     } else {
       showingContacts = contacts
@@ -39,17 +39,15 @@ class ListContacts extends Component {
     return (
       <div className='list-contacts'>
         <div className='list-contacts-top'>
-          <input
-            className='search-contacts'
-            type='text'
-            placeholder='Search contacts'
-            value={query}
+          <input 
+            className='search-contacts' 
+            type='text' 
+            placeholder='Search contacts' 
+            value={this.state.query} 
             onChange={(event) => this.updateQuery(event.target.value)}
           />
-          <Link
-            to='/create'
-            className='add-contact'
-          >Add Contact</Link>
+          <Link to='/create'
+            className='add-contact'>Add contact</Link>
         </div>
 
         {showingContacts.length !== contacts.length && (
@@ -76,6 +74,7 @@ class ListContacts extends Component {
           ))}
         </ol>
       </div>
+      
     )
   }
 }
